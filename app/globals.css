@@ -1,0 +1,336 @@
+/* app/globals.css */
+/* Design tokens and shared styles for WeStayFlyBot.
+   Component-specific styles live in each page's module. */
+
+:root {
+  --cream: #fdf6ed;
+  --terracotta: #c8603a;
+  --terra-light: #e8845f;
+  --terra-dark: #a04828;
+  --sky: #4a90b8;
+  --sky-light: #d4eaf5;
+  --sand: #e8d5b0;
+  --sand-dark: #c9b48a;
+  --charcoal: #2d2a26;
+  --warm-gray: #7a6f63;
+  --leaf: #6b9e6b;
+  --danger: #b84a4a;
+  --danger-light: #fdf0f0;
+  --success: #4a7c59;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--cream);
+  font-family: 'DM Sans', sans-serif;
+  color: var(--charcoal);
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Grain overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0.4;
+}
+
+/* ── SHARED HEADER ───────────────────────────────────────────── */
+.wsfb-header {
+  background: linear-gradient(160deg, #e8845f 0%, #c8603a 40%, #a04828 100%);
+  padding: 2.5rem 2rem 5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.wsfb-header::after {
+  content: '';
+  position: absolute;
+  bottom: -2px; left: 0; right: 0;
+  height: 80px;
+  background: var(--cream);
+  clip-path: ellipse(55% 100% at 50% 100%);
+}
+
+.wsfb-header-inner {
+  max-width: 760px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── SHARED FORM ELEMENTS ────────────────────────────────────── */
+.wsfb-label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--warm-gray);
+  margin-bottom: 0.42rem;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+
+.wsfb-hint {
+  font-size: 0.74rem;
+  color: var(--sand-dark);
+  margin-top: 0.28rem;
+  font-style: italic;
+}
+
+.wsfb-search-wrap {
+  position: relative;
+}
+
+.wsfb-search-input {
+  width: 100%;
+  padding: 0.72rem 1rem 0.72rem 2.5rem;
+  border: 1.5px solid var(--sand);
+  border-radius: 10px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.93rem;
+  color: var(--charcoal);
+  background: var(--cream);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+
+.wsfb-search-input:focus {
+  border-color: var(--terracotta);
+  box-shadow: 0 0 0 3px rgba(200,96,58,0.1);
+  background: #fff;
+}
+
+.wsfb-search-icon {
+  position: absolute;
+  left: 0.85rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.95rem;
+  pointer-events: none;
+}
+
+.wsfb-dropdown {
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 0; right: 0;
+  background: #fff;
+  border: 1.5px solid var(--sand);
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  z-index: 50;
+  max-height: 215px;
+  overflow-y: auto;
+}
+
+.wsfb-dropdown-item {
+  padding: 0.6rem 1rem;
+  cursor: pointer;
+  font-size: 0.86rem;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  transition: background 0.12s;
+  border-bottom: 1px solid #f5f0ea;
+}
+
+.wsfb-dropdown-item:last-child { border-bottom: none; }
+.wsfb-dropdown-item:hover { background: var(--cream); }
+.wsfb-dropdown-item.selected { background: #fef2ec; }
+
+.wsfb-airport-code {
+  font-weight: 600;
+  color: var(--terracotta);
+  font-size: 0.78rem;
+  background: #fef2ec;
+  padding: 0.1rem 0.38rem;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.wsfb-airport-detail { flex: 1; }
+.wsfb-airport-name { color: var(--charcoal); font-size: 0.86rem; }
+.wsfb-airport-city { color: var(--warm-gray); font-size: 0.75rem; }
+.wsfb-check { color: var(--terracotta); font-size: 0.82rem; margin-left: auto; }
+
+.wsfb-tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.55rem;
+  min-height: 26px;
+}
+
+.wsfb-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: #fef2ec;
+  border: 1.5px solid rgba(200,96,58,0.25);
+  color: var(--terra-dark);
+  font-size: 0.79rem;
+  font-weight: 500;
+  padding: 0.24rem 0.52rem 0.24rem 0.68rem;
+  border-radius: 50px;
+  animation: tagPop 0.18s ease;
+}
+
+.wsfb-tag.roadtrip {
+  background: #eef5ee;
+  border-color: rgba(107,158,107,0.3);
+  color: #3d6b3d;
+}
+
+.wsfb-tag-remove {
+  cursor: pointer;
+  font-size: 0.88rem;
+  opacity: 0.5;
+  transition: opacity 0.12s;
+  background: none;
+  border: none;
+  color: inherit;
+  padding: 0;
+  line-height: 1;
+}
+.wsfb-tag-remove:hover { opacity: 1; }
+
+.wsfb-dest-tabs {
+  display: flex;
+  gap: 0.45rem;
+  margin-bottom: 0.85rem;
+}
+
+.wsfb-dest-tab {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  border: 1.5px solid var(--sand);
+  background: var(--cream);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.83rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: center;
+  color: var(--warm-gray);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+.wsfb-dest-tab.active-flight {
+  background: #fef2ec;
+  border-color: var(--terracotta);
+  color: var(--terracotta);
+}
+
+.wsfb-dest-tab.active-road {
+  background: #eef5ee;
+  border-color: var(--leaf);
+  color: #3d6b3d;
+}
+
+.wsfb-airline-grid { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+.wsfb-airline-pill {
+  padding: 0.38rem 0.8rem;
+  border-radius: 50px;
+  border: 1.5px solid var(--sand);
+  background: var(--cream);
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.13s;
+  color: var(--warm-gray);
+  user-select: none;
+  font-family: 'DM Sans', sans-serif;
+}
+.wsfb-airline-pill:hover { border-color: var(--sand-dark); color: var(--charcoal); }
+.wsfb-airline-pill.selected { background: #fef2ec; border-color: var(--terracotta); color: var(--terracotta); }
+.wsfb-airline-pill.any-selected { background: var(--sky-light); border-color: var(--sky); color: var(--sky); }
+
+.wsfb-star-row { display: flex; gap: 0.35rem; align-items: center; }
+
+.wsfb-star-btn {
+  font-size: 1.5rem;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0.08rem;
+  transition: transform 0.1s;
+  line-height: 1;
+}
+.wsfb-star-btn:hover { transform: scale(1.15); }
+.wsfb-star-btn.dim { filter: grayscale(1) opacity(0.3); }
+.wsfb-star-label { font-size: 0.83rem; color: var(--warm-gray); margin-left: 0.35rem; }
+
+.wsfb-divider {
+  height: 1px;
+  background: linear-gradient(90deg, var(--sand), transparent);
+  margin: 1.4rem 0;
+}
+
+.wsfb-section-title {
+  font-family: 'Caveat', cursive;
+  font-size: 1.25rem;
+  color: var(--terracotta);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.1rem;
+}
+
+/* ── SHARED FOOTER ───────────────────────────────────────────── */
+.wsfb-footer {
+  background: var(--charcoal);
+  color: rgba(255,255,255,0.45);
+  text-align: center;
+  padding: 1.4rem;
+  font-size: 0.76rem;
+}
+.wsfb-footer a { color: var(--terra-light); text-decoration: none; }
+
+/* ── ANIMATIONS ─────────────────────────────────────────────── */
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes tagPop {
+  from { opacity: 0; transform: scale(0.8); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes bounceIn {
+  0%   { transform: scale(0.5); opacity: 0; }
+  70%  { transform: scale(1.1); }
+  100% { transform: scale(1);   opacity: 1; }
+}
+
+/* ── RESPONSIVE ─────────────────────────────────────────────── */
+@media (max-width: 580px) {
+  .wsfb-dest-tabs { flex-direction: column; }
+}

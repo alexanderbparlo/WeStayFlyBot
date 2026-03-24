@@ -278,6 +278,57 @@ body::before {
 .wsfb-star-btn.dim { filter: grayscale(1) opacity(0.3); }
 .wsfb-star-label { font-size: 0.83rem; color: var(--warm-gray); margin-left: 0.35rem; }
 
+/* ── NEARBY AIRPORT SUGGESTIONS ─────────────────────────────── */
+.wsfb-nearby-wrap {
+  margin-top: 0.55rem;
+  padding: 0.5rem 0.65rem;
+  background: var(--sky-light);
+  border: 1.5px solid rgba(74,144,184,0.25);
+  border-radius: 8px;
+}
+
+.wsfb-nearby-label {
+  font-size: 0.74rem;
+  color: var(--sky);
+  font-weight: 500;
+  display: block;
+  margin-bottom: 0.4rem;
+  letter-spacing: 0.2px;
+}
+
+.wsfb-nearby-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.wsfb-nearby-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.22rem 0.55rem;
+  border-radius: 50px;
+  border: 1.5px solid rgba(74,144,184,0.4);
+  background: #fff;
+  color: var(--sky);
+  font-size: 0.76rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.13s;
+  font-family: 'DM Sans', sans-serif;
+}
+.wsfb-nearby-pill:hover {
+  background: var(--sky);
+  color: #fff;
+  border-color: var(--sky);
+}
+
+.wsfb-nearby-dist {
+  font-weight: 400;
+  font-size: 0.7rem;
+  opacity: 0.75;
+}
+
 .wsfb-divider {
   height: 1px;
   background: linear-gradient(90deg, var(--sand), transparent);

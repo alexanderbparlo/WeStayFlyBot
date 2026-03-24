@@ -98,8 +98,8 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     ];
     await setDestinations(subscriber.id, allDestinations);
 
-    // 4. Send welcome email
-    await sendWelcomeEmail({
+    // 4. Send welcome email (non-blocking — a Resend failure should not prevent subscription)
+    sendWelcomeEmail({
       email,
       subscriberToken: subscriber.unsubscribe_token,
       originAirports,
@@ -107,7 +107,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       roadDestinations,
       airlines,
       minHotelStars,
-    });
+    }).catch(err => console.error('[subscribe] Welcome email failed:', err));
 
     return NextResponse.json({ success: true, subscriberId: subscriber.id }, { status: 201 });
 

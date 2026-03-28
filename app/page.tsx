@@ -4,7 +4,6 @@
 // Converted from index.html into a Next.js client component.
 
 import { useState } from 'react';
-import type { Metadata } from 'next';
 import {
   AirportSearch,
   DestinationPanel,

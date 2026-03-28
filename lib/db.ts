@@ -6,7 +6,10 @@
 import { neon } from '@neondatabase/serverless';
 
 function getSql() {
-  return neon(process.env.DATABASE_URL!);
+  // Vercel Postgres auto-injects POSTGRES_URL; DATABASE_URL is the manual/Neon name.
+  const url = process.env.DATABASE_URL ?? process.env.POSTGRES_URL;
+  if (!url) throw new Error('No database URL configured (DATABASE_URL or POSTGRES_URL)');
+  return neon(url);
 }
 
 // ─── TYPE DEFINITIONS ────────────────────────────────────────────────────────

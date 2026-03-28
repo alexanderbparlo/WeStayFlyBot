@@ -3,8 +3,8 @@
 // Reusable airport/city search field with multi-select tags.
 // Used by both the subscribe page and manage preferences page.
 
-import { useState, useRef, useEffect, useCallback } from 'react';
-import { Airport, searchAirportsByCity, searchRoadtripCities } from '@/lib/airport-data';
+import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
+import { Airport, AIRPORTS, haversine, searchAirportsByCity, searchRoadtripCities } from '@/lib/airport-data';
 
 // ─── AIRPORT SEARCH ──────────────────────────────────────────────────────────
 
@@ -46,6 +46,26 @@ export function AirportSearch({ selected, onChange, placeholder, label, hint }: 
     document.addEventListener('mousedown', handler);
     return () => document.removeEventListener('mousedown', handler);
   }, []);
+
+  // Compute nearby airports (within 100 mi) for each selected airport, excluding already-selected ones
+  const nearbySuggestions = useMemo(() => {
+    if (!selected.length) return [];
+    const shownCodes = new Set(selected.map(s => s.code));
+    const suggestions: (Airport & { dist: number; nearTo: string })[] = [];
+
+    for (const sel of selected) {
+      for (const airport of AIRPORTS) {
+        if (shownCodes.has(airport.code)) continue;
+        const dist = haversine(sel.lat, sel.lon, airport.lat, airport.lon);
+        if (dist > 0 && dist <= 100) {
+          shownCodes.add(airport.code); // avoid duplicates across multiple selections
+          suggestions.push({ ...airport, dist, nearTo: sel.code });
+        }
+      }
+    }
+
+    return suggestions.sort((a, b) => a.dist - b.dist).slice(0, 6);
+  }, [selected]);
 
   return (
     <div className="wsfb-field-group">
@@ -100,6 +120,26 @@ export function AirportSearch({ selected, onChange, placeholder, label, hint }: 
               >×</button>
             </span>
           ))}
+        </div>
+      )}
+
+      {nearbySuggestions.length > 0 && (
+        <div className="wsfb-nearby-wrap">
+          <span className="wsfb-nearby-label">📍 Nearby airports within 100 mi:</span>
+          <div className="wsfb-nearby-list">
+            {nearbySuggestions.map(a => (
+              <button
+                key={a.code}
+                type="button"
+                className="wsfb-nearby-pill"
+                onClick={() => onChange([...selected, a])}
+                title={`${a.name} · ${Math.round(a.dist)} mi from ${a.nearTo}`}
+              >
+                + {a.code}
+                <span className="wsfb-nearby-dist">{Math.round(a.dist)} mi</span>
+              </button>
+            ))}
+          </div>
         </div>
       )}
 

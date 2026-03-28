@@ -22,7 +22,7 @@ function money(n: number): string {
 }
 
 function manageLink(token: string): string {
-  return `${SITE_URL}?token=${token}`;
+  return `${SITE_URL}/manage?token=${token}`;
 }
 
 function unsubLink(token: string): string {

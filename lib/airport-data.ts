@@ -88,13 +88,253 @@ export const AIRPORTS: Airport[] = [
 ];
 
 export const ROADTRIP_CITIES: string[] = [
-  'Asheville, NC', 'Sedona, AZ', 'Nashville, TN', 'Savannah, GA',
-  'Santa Fe, NM', 'Mystic, CT', 'Bar Harbor, ME', 'Moab, UT',
-  'Carmel-by-the-Sea, CA', 'Door County, WI', 'Gatlinburg, TN',
-  'Traverse City, MI', 'Stowe, VT', 'Marfa, TX', 'Charlottesville, VA',
-  'Flagstaff, AZ', 'Lake Tahoe, CA/NV', 'Outer Banks, NC',
-  'Key West, FL', 'Napa Valley, CA', 'Shenandoah, VA',
-  'Cape Cod, MA', 'Bend, OR', 'Jackson Hole, WY', 'Blue Ridge Parkway, VA/NC',
+  // Alabama
+  'Birmingham, AL', 'Montgomery, AL', 'Huntsville, AL', 'Mobile, AL', 'Tuscaloosa, AL',
+  'Auburn, AL', 'Decatur, AL', 'Gulf Shores, AL', 'Fairhope, AL', 'Florence, AL',
+  // Alaska
+  'Anchorage, AK', 'Fairbanks, AK', 'Juneau, AK', 'Sitka, AK', 'Ketchikan, AK',
+  'Homer, AK', 'Seward, AK', 'Talkeetna, AK', 'Kenai, AK',
+  // Arizona
+  'Phoenix, AZ', 'Tucson, AZ', 'Mesa, AZ', 'Chandler, AZ', 'Scottsdale, AZ',
+  'Flagstaff, AZ', 'Sedona, AZ', 'Prescott, AZ', 'Tempe, AZ', 'Yuma, AZ',
+  'Lake Havasu City, AZ', 'Page, AZ', 'Williams, AZ',
+  // Arkansas
+  'Little Rock, AR', 'Fort Smith, AR', 'Fayetteville, AR', 'Springdale, AR',
+  'Jonesboro, AR', 'Conway, AR', 'Rogers, AR', 'Hot Springs, AR', 'Eureka Springs, AR',
+  // California
+  'Los Angeles, CA', 'San Diego, CA', 'San Jose, CA', 'San Francisco, CA',
+  'Fresno, CA', 'Sacramento, CA', 'Long Beach, CA', 'Oakland, CA', 'Bakersfield, CA',
+  'Anaheim, CA', 'Santa Ana, CA', 'Riverside, CA', 'Stockton, CA', 'Irvine, CA',
+  'Santa Rosa, CA', 'Oceanside, CA', 'Salinas, CA', 'Sunnyvale, CA',
+  'Pasadena, CA', 'Escondido, CA', 'Torrance, CA', 'Fullerton, CA', 'Visalia, CA',
+  'Thousand Oaks, CA', 'Simi Valley, CA', 'Berkeley, CA', 'Costa Mesa, CA',
+  'Santa Barbara, CA', 'Napa, CA', 'Redding, CA', 'Santa Cruz, CA',
+  'Carmel-by-the-Sea, CA', 'Lake Tahoe, CA', 'Palm Springs, CA', 'Monterey, CA',
+  'Napa Valley, CA', 'Sonoma, CA', 'Healdsburg, CA', 'San Luis Obispo, CA',
+  'Big Sur, CA', 'Malibu, CA', 'Laguna Beach, CA', 'Santa Monica, CA',
+  'Ventura, CA', 'Redlands, CA', 'Temecula, CA',
+  // Colorado
+  'Denver, CO', 'Colorado Springs, CO', 'Aurora, CO', 'Fort Collins, CO',
+  'Lakewood, CO', 'Thornton, CO', 'Arvada, CO', 'Westminster, CO', 'Pueblo, CO',
+  'Boulder, CO', 'Aspen, CO', 'Vail, CO', 'Telluride, CO', 'Steamboat Springs, CO',
+  'Breckenridge, CO', 'Durango, CO', 'Glenwood Springs, CO', 'Estes Park, CO',
+  'Crested Butte, CO', 'Ouray, CO', 'Salida, CO', 'Silverton, CO',
+  // Connecticut
+  'Bridgeport, CT', 'New Haven, CT', 'Hartford, CT', 'Stamford, CT',
+  'Waterbury, CT', 'Norwalk, CT', 'Danbury, CT', 'New Britain, CT',
+  'Greenwich, CT', 'Mystic, CT', 'Essex, CT', 'Litchfield, CT',
+  // Delaware
+  'Wilmington, DE', 'Dover, DE', 'Newark, DE', 'Rehoboth Beach, DE',
+  'Lewes, DE', 'Milford, DE',
+  // Florida
+  'Jacksonville, FL', 'Miami, FL', 'Tampa, FL', 'Orlando, FL',
+  'St. Petersburg, FL', 'Tallahassee, FL', 'Fort Lauderdale, FL',
+  'Cape Coral, FL', 'Pembroke Pines, FL', 'Hollywood, FL', 'Clearwater, FL',
+  'West Palm Beach, FL', 'Lakeland, FL', 'Coral Springs, FL', 'Boca Raton, FL',
+  'Pompano Beach, FL', 'Gainesville, FL', 'Plantation, FL', 'Sunrise, FL',
+  'Key West, FL', 'Destin, FL', 'Naples, FL', 'Sarasota, FL', 'Fort Myers, FL',
+  'Daytona Beach, FL', 'St. Augustine, FL', 'Pensacola, FL', 'Ocala, FL',
+  'Panama City Beach, FL', 'Sanibel Island, FL', 'Clearwater Beach, FL',
+  'Miami Beach, FL', 'Islamorada, FL', 'Siesta Key, FL', 'Amelia Island, FL',
+  // Georgia
+  'Atlanta, GA', 'Augusta, GA', 'Columbus, GA', 'Macon, GA', 'Savannah, GA',
+  'Athens, GA', 'Sandy Springs, GA', 'Roswell, GA', 'Albany, GA',
+  'Warner Robins, GA', 'Alpharetta, GA', 'Marietta, GA', 'Valdosta, GA',
+  'Tybee Island, GA', 'Blue Ridge, GA', 'Dahlonega, GA', 'Helen, GA',
+  'Jekyll Island, GA', 'St. Simons Island, GA',
+  // Hawaii
+  'Honolulu, HI', 'Hilo, HI', 'Kailua, HI', 'Pearl City, HI', 'Waipahu, HI',
+  'Kaneohe, HI', 'Kihei, HI', 'Lahaina, HI', 'Lihue, HI', 'Kona, HI',
+  'Waikiki, HI', 'Hana, HI', 'Lanai City, HI', 'Molokai, HI',
+  // Idaho
+  'Boise, ID', 'Meridian, ID', 'Nampa, ID', 'Idaho Falls, ID', 'Pocatello, ID',
+  'Caldwell, ID', "Coeur d'Alene, ID", 'Twin Falls, ID', 'Lewiston, ID',
+  'Sun Valley, ID', 'McCall, ID', 'Sandpoint, ID',
+  // Illinois
+  'Chicago, IL', 'Aurora, IL', 'Joliet, IL', 'Naperville, IL', 'Rockford, IL',
+  'Springfield, IL', 'Elgin, IL', 'Peoria, IL', 'Champaign, IL', 'Waukegan, IL',
+  'Bloomington, IL', 'Evanston, IL', 'Decatur, IL', 'Schaumburg, IL',
+  'Galena, IL', 'Starved Rock, IL', 'Galesburg, IL', 'Quincy, IL',
+  // Indiana
+  'Indianapolis, IN', 'Fort Wayne, IN', 'Evansville, IN', 'South Bend, IN',
+  'Carmel, IN', 'Hammond, IN', 'Fishers, IN', 'Bloomington, IN',
+  'Gary, IN', 'Lafayette, IN', 'Muncie, IN', 'Terre Haute, IN',
+  'Brown County, IN', 'Nashville, IN', 'French Lick, IN',
+  // Iowa
+  'Des Moines, IA', 'Cedar Rapids, IA', 'Davenport, IA', 'Sioux City, IA',
+  'Iowa City, IA', 'Waterloo, IA', 'Council Bluffs, IA', 'Dubuque, IA',
+  'Ames, IA', 'Cedar Falls, IA',
+  // Kansas
+  'Wichita, KS', 'Overland Park, KS', 'Kansas City, KS', 'Topeka, KS',
+  'Olathe, KS', 'Lawrence, KS', 'Shawnee, KS', 'Manhattan, KS', 'Lenexa, KS',
+  'Dodge City, KS', 'Abilene, KS',
+  // Kentucky
+  'Louisville, KY', 'Lexington, KY', 'Bowling Green, KY', 'Owensboro, KY',
+  'Covington, KY', 'Richmond, KY', 'Georgetown, KY', 'Florence, KY',
+  'Henderson, KY', 'Elizabethtown, KY', 'Bardstown, KY', 'Mammoth Cave, KY',
+  'Berea, KY', 'Paducah, KY',
+  // Louisiana
+  'New Orleans, LA', 'Baton Rouge, LA', 'Shreveport, LA', 'Lafayette, LA',
+  'Lake Charles, LA', 'Kenner, LA', 'Bossier City, LA', 'Monroe, LA',
+  'Alexandria, LA', 'Natchitoches, LA', 'Grand Isle, LA',
+  // Maine
+  'Portland, ME', 'Lewiston, ME', 'Bangor, ME', 'South Portland, ME',
+  'Auburn, ME', 'Augusta, ME', 'Bar Harbor, ME', 'Acadia, ME',
+  'Kennebunkport, ME', 'Ogunquit, ME', 'Camden, ME', 'Freeport, ME',
+  // Maryland
+  'Baltimore, MD', 'Columbia, MD', 'Germantown, MD', 'Silver Spring, MD',
+  'Frederick, MD', 'Rockville, MD', 'Gaithersburg, MD', 'Bethesda, MD',
+  'Annapolis, MD', 'Ocean City, MD', 'Easton, MD', 'St. Michaels, MD',
+  'Chesapeake City, MD',
+  // Massachusetts
+  'Boston, MA', 'Worcester, MA', 'Springfield, MA', 'Lowell, MA',
+  'Cambridge, MA', 'Brockton, MA', 'New Bedford, MA', 'Fall River, MA',
+  'Lynn, MA', 'Quincy, MA', 'Newton, MA', 'Somerville, MA', 'Framingham, MA',
+  'Nantucket, MA', "Martha's Vineyard, MA", 'Cape Cod, MA', 'Plymouth, MA',
+  'Salem, MA', 'Gloucester, MA', 'Provincetown, MA', 'Lenox, MA', 'Stockbridge, MA',
+  // Michigan
+  'Detroit, MI', 'Grand Rapids, MI', 'Warren, MI', 'Sterling Heights, MI',
+  'Ann Arbor, MI', 'Lansing, MI', 'Flint, MI', 'Dearborn, MI', 'Livonia, MI',
+  'Troy, MI', 'Farmington Hills, MI', 'Kalamazoo, MI', 'Wyoming, MI',
+  'Traverse City, MI', 'Mackinac Island, MI', 'Petoskey, MI', 'Harbor Springs, MI',
+  'Sleeping Bear Dunes, MI', 'Pictured Rocks, MI', 'Marquette, MI',
+  // Minnesota
+  'Minneapolis, MN', 'Saint Paul, MN', 'Rochester, MN', 'Bloomington, MN',
+  'Duluth, MN', 'Brooklyn Park, MN', 'Plymouth, MN', 'Maple Grove, MN',
+  'Woodbury, MN', 'St. Cloud, MN', 'Eagan, MN', 'Mankato, MN',
+  'Brainerd, MN', 'Walker, MN', 'Ely, MN', 'Grand Marais, MN',
+  // Mississippi
+  'Jackson, MS', 'Gulfport, MS', 'Southaven, MS', 'Hattiesburg, MS',
+  'Biloxi, MS', 'Meridian, MS', 'Tupelo, MS', 'Greenville, MS',
+  'Natchez, MS', 'Ocean Springs, MS', 'Oxford, MS',
+  // Missouri
+  'Kansas City, MO', 'St. Louis, MO', 'Springfield, MO', 'Columbia, MO',
+  'Independence, MO', "Lee's Summit, MO", "O'Fallon, MO", 'St. Joseph, MO',
+  'St. Charles, MO', 'Branson, MO', 'Hannibal, MO', 'Hermann, MO',
+  // Montana
+  'Billings, MT', 'Missoula, MT', 'Great Falls, MT', 'Bozeman, MT',
+  'Butte, MT', 'Helena, MT', 'Kalispell, MT', 'Whitefish, MT',
+  'Glacier National Park, MT', 'Livingston, MT', 'Big Sky, MT',
+  // Nebraska
+  'Omaha, NE', 'Lincoln, NE', 'Bellevue, NE', 'Grand Island, NE',
+  'Kearney, NE', 'Fremont, NE', 'Norfolk, NE', 'North Platte, NE',
+  // Nevada
+  'Las Vegas, NV', 'Henderson, NV', 'Reno, NV', 'North Las Vegas, NV',
+  'Sparks, NV', 'Carson City, NV', 'Elko, NV', 'Lake Tahoe, NV',
+  // New Hampshire
+  'Manchester, NH', 'Nashua, NH', 'Concord, NH', 'Dover, NH', 'Rochester, NH',
+  'Salem, NH', 'Keene, NH', 'Portsmouth, NH', 'North Conway, NH',
+  'Franconia Notch, NH', 'Laconia, NH', 'Hanover, NH',
+  // New Jersey
+  'Newark, NJ', 'Jersey City, NJ', 'Paterson, NJ', 'Elizabeth, NJ',
+  'Edison, NJ', 'Woodbridge, NJ', 'Toms River, NJ', 'Hamilton, NJ',
+  'Trenton, NJ', 'Clifton, NJ', 'Camden, NJ', 'Brick, NJ', 'Cherry Hill, NJ',
+  'Atlantic City, NJ', 'Cape May, NJ', 'Princeton, NJ', 'Hoboken, NJ',
+  'Asbury Park, NJ', 'Spring Lake, NJ',
+  // New Mexico
+  'Albuquerque, NM', 'Las Cruces, NM', 'Rio Rancho, NM', 'Santa Fe, NM',
+  'Roswell, NM', 'Farmington, NM', 'Clovis, NM', 'Hobbs, NM', 'Taos, NM',
+  'White Sands, NM', 'Carlsbad, NM', 'Silver City, NM',
+  // New York
+  'New York City, NY', 'Buffalo, NY', 'Rochester, NY', 'Yonkers, NY',
+  'Syracuse, NY', 'Albany, NY', 'New Rochelle, NY', 'Schenectady, NY',
+  'Utica, NY', 'Niagara Falls, NY', 'Troy, NY', 'White Plains, NY',
+  'Saratoga Springs, NY', 'Ithaca, NY', 'Lake Placid, NY', 'Hudson, NY',
+  'Catskills, NY', 'Finger Lakes, NY', 'Hamptons, NY', 'Sag Harbor, NY',
+  'Montauk, NY', 'Fire Island, NY',
+  // North Carolina
+  'Charlotte, NC', 'Raleigh, NC', 'Greensboro, NC', 'Durham, NC',
+  'Winston-Salem, NC', 'Fayetteville, NC', 'Cary, NC', 'Wilmington, NC',
+  'High Point, NC', 'Concord, NC', 'Asheville, NC', 'Greenville, NC',
+  'Gastonia, NC', 'Chapel Hill, NC', 'Outer Banks, NC', 'Boone, NC',
+  'Blowing Rock, NC', 'Brevard, NC', 'Blue Ridge Parkway, NC', 'Highlands, NC',
+  // North Dakota
+  'Fargo, ND', 'Bismarck, ND', 'Grand Forks, ND', 'Minot, ND',
+  'West Fargo, ND', 'Williston, ND', 'Medora, ND',
+  // Ohio
+  'Columbus, OH', 'Cleveland, OH', 'Cincinnati, OH', 'Toledo, OH',
+  'Akron, OH', 'Dayton, OH', 'Parma, OH', 'Canton, OH', 'Youngstown, OH',
+  'Lorain, OH', 'Hamilton, OH', 'Springfield, OH', 'Kettering, OH',
+  'Elyria, OH', 'Mansfield, OH', 'Newark, OH', 'Athens, OH',
+  'Hocking Hills, OH', 'Sandusky, OH', 'Put-in-Bay, OH',
+  // Oklahoma
+  'Oklahoma City, OK', 'Tulsa, OK', 'Norman, OK', 'Broken Arrow, OK',
+  'Lawton, OK', 'Edmond, OK', 'Moore, OK', 'Midwest City, OK',
+  'Enid, OK', 'Stillwater, OK', 'Tahlequah, OK',
+  // Oregon
+  'Portland, OR', 'Salem, OR', 'Eugene, OR', 'Gresham, OR', 'Hillsboro, OR',
+  'Beaverton, OR', 'Bend, OR', 'Medford, OR', 'Springfield, OR', 'Corvallis, OR',
+  'Ashland, OR', 'Astoria, OR', 'Cannon Beach, OR', 'Hood River, OR',
+  'Crater Lake, OR', 'Bandon, OR', 'Sisters, OR',
+  // Pennsylvania
+  'Philadelphia, PA', 'Pittsburgh, PA', 'Allentown, PA', 'Erie, PA',
+  'Reading, PA', 'Scranton, PA', 'Bethlehem, PA', 'Lancaster, PA',
+  'Harrisburg, PA', 'Altoona, PA', 'York, PA', 'State College, PA',
+  'Gettysburg, PA', 'Valley Forge, PA', 'New Hope, PA', 'Pocono Mountains, PA',
+  'Hershey, PA', 'Intercourse, PA',
+  // Rhode Island
+  'Providence, RI', 'Warwick, RI', 'Cranston, RI', 'Pawtucket, RI',
+  'East Providence, RI', 'Woonsocket, RI', 'Newport, RI', 'Block Island, RI',
+  'Narragansett, RI',
+  // South Carolina
+  'Columbia, SC', 'Charleston, SC', 'North Charleston, SC', 'Mount Pleasant, SC',
+  'Rock Hill, SC', 'Greenville, SC', 'Summerville, SC', 'Goose Creek, SC',
+  'Hilton Head Island, SC', 'Myrtle Beach, SC', 'Florence, SC', 'Spartanburg, SC',
+  'Beaufort, SC', 'Folly Beach, SC', 'Pawleys Island, SC',
+  // South Dakota
+  'Sioux Falls, SD', 'Rapid City, SD', 'Aberdeen, SD', 'Brookings, SD',
+  'Watertown, SD', 'Mitchell, SD', 'Yankton, SD', 'Pierre, SD',
+  'Badlands, SD', 'Deadwood, SD', 'Hot Springs, SD', 'Custer, SD',
+  // Tennessee
+  'Nashville, TN', 'Memphis, TN', 'Knoxville, TN', 'Chattanooga, TN',
+  'Clarksville, TN', 'Murfreesboro, TN', 'Franklin, TN', 'Jackson, TN',
+  'Johnson City, TN', 'Kingsport, TN', 'Morristown, TN', 'Gatlinburg, TN',
+  'Pigeon Forge, TN', 'Sevierville, TN', 'Jonesborough, TN',
+  // Texas
+  'Houston, TX', 'San Antonio, TX', 'Dallas, TX', 'Austin, TX', 'Fort Worth, TX',
+  'El Paso, TX', 'Arlington, TX', 'Corpus Christi, TX', 'Plano, TX',
+  'Laredo, TX', 'Lubbock, TX', 'Garland, TX', 'Irving, TX', 'Frisco, TX',
+  'McKinney, TX', 'Amarillo, TX', 'Grand Prairie, TX', 'Brownsville, TX',
+  'Killeen, TX', 'Pasadena, TX', 'Mesquite, TX', 'McAllen, TX', 'Waco, TX',
+  'Carrollton, TX', 'Denton, TX', 'Midland, TX', 'Abilene, TX',
+  'Beaumont, TX', 'Round Rock, TX', 'Galveston, TX', 'Port Arthur, TX',
+  'San Marcos, TX', 'Marfa, TX', 'Fredericksburg, TX', 'Gruene, TX',
+  'New Braunfels, TX', 'Wimberley, TX', 'Bastrop, TX',
+  // Utah
+  'Salt Lake City, UT', 'West Valley City, UT', 'Provo, UT', 'West Jordan, UT',
+  'Orem, UT', 'Sandy, UT', 'St. George, UT', 'Ogden, UT', 'Logan, UT',
+  'Moab, UT', 'Park City, UT', 'Bryce Canyon, UT', 'Zion, UT',
+  'Arches, UT', 'Capitol Reef, UT', 'Canyonlands, UT', 'Cedar City, UT',
+  'Torrey, UT',
+  // Vermont
+  'Burlington, VT', 'South Burlington, VT', 'Rutland, VT', 'Barre, VT',
+  'Montpelier, VT', 'Stowe, VT', 'Brattleboro, VT', 'Woodstock, VT',
+  'Manchester, VT', 'Middlebury, VT', 'Killington, VT',
+  // Virginia
+  'Virginia Beach, VA', 'Norfolk, VA', 'Chesapeake, VA', 'Richmond, VA',
+  'Newport News, VA', 'Alexandria, VA', 'Hampton, VA', 'Roanoke, VA',
+  'Portsmouth, VA', 'Suffolk, VA', 'Lynchburg, VA', 'Harrisonburg, VA',
+  'Charlottesville, VA', 'Arlington, VA', 'Fredericksburg, VA', 'Williamsburg, VA',
+  'Shenandoah, VA', 'Luray, VA', 'Blue Ridge Parkway, VA', 'Abingdon, VA',
+  'Chincoteague, VA',
+  // Washington
+  'Seattle, WA', 'Spokane, WA', 'Tacoma, WA', 'Vancouver, WA', 'Bellevue, WA',
+  'Kent, WA', 'Everett, WA', 'Renton, WA', 'Kirkland, WA', 'Bellingham, WA',
+  'Kennewick, WA', 'Yakima, WA', 'Redmond, WA', 'Olympia, WA',
+  'Leavenworth, WA', 'Winthrop, WA', 'Chelan, WA', 'Port Townsend, WA',
+  'San Juan Islands, WA', 'Mount Rainier, WA', 'North Cascades, WA',
+  // West Virginia
+  'Charleston, WV', 'Huntington, WV', 'Parkersburg, WV', 'Morgantown, WV',
+  'Wheeling, WV', 'Weirton, WV', "Harpers Ferry, WV", 'Lewisburg, WV',
+  // Wisconsin
+  'Milwaukee, WI', 'Madison, WI', 'Green Bay, WI', 'Kenosha, WI',
+  'Racine, WI', 'Appleton, WI', 'Waukesha, WI', 'Oshkosh, WI',
+  'Eau Claire, WI', 'Janesville, WI', 'La Crosse, WI', 'Door County, WI',
+  'Wisconsin Dells, WI', 'Bayfield, WI', 'Apostle Islands, WI',
+  // Wyoming
+  'Cheyenne, WY', 'Casper, WY', 'Laramie, WY', 'Gillette, WY',
+  'Rock Springs, WY', 'Jackson Hole, WY', 'Cody, WY', 'Sheridan, WY',
+  'Yellowstone, WY', 'Grand Teton, WY',
 ];
 
 export const AIRLINES: string[] = [

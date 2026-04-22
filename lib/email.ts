@@ -8,7 +8,7 @@ import { EvaluatedDeal } from './deal-evaluator';
 function getResend() {
   return new Resend(process.env.RESEND_API_KEY!);
 }
-const FROM_EMAIL = 'WeStayFlyBot <alerts@westayflybot.com>';
+const FROM_EMAIL = process.env.FROM_EMAIL ?? 'WeStayFlyBot <alerts@westayflybot.com>';
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://westayflybot.vercel.app';
 
 // ─── SHARED HELPERS ───────────────────────────────────────────────────────────

@@ -133,14 +133,16 @@ export async function setOriginAirports(
   airports: { iata_code: string; city: string }[]
 ): Promise<void> {
   const sql = getSql();
-  await sql`DELETE FROM origin_airports WHERE subscriber_id = ${subscriberId}`;
-  for (const a of airports) {
-    await sql`
+  // Atomic: delete + re-insert in a single transaction so a mid-operation crash
+  // cannot leave the subscriber with no airports.
+  await sql.transaction([
+    sql`DELETE FROM origin_airports WHERE subscriber_id = ${subscriberId}`,
+    ...airports.map(a => sql`
       INSERT INTO origin_airports (subscriber_id, iata_code, city)
       VALUES (${subscriberId}, ${a.iata_code}, ${a.city})
       ON CONFLICT DO NOTHING
-    `;
-  }
+    `),
+  ]);
 }
 
 export async function getOriginAirports(subscriberId: string): Promise<OriginAirport[]> {
@@ -158,14 +160,16 @@ export async function setDestinations(
   destinations: { dest_type: 'flight' | 'roadtrip'; iata_code: string | null; city_name: string }[]
 ): Promise<void> {
   const sql = getSql();
-  await sql`DELETE FROM destinations WHERE subscriber_id = ${subscriberId}`;
-  for (const d of destinations) {
-    await sql`
+  // Atomic: delete + re-insert in a single transaction so a mid-operation crash
+  // cannot leave the subscriber with no destinations.
+  await sql.transaction([
+    sql`DELETE FROM destinations WHERE subscriber_id = ${subscriberId}`,
+    ...destinations.map(d => sql`
       INSERT INTO destinations (subscriber_id, dest_type, iata_code, city_name)
       VALUES (${subscriberId}, ${d.dest_type}, ${d.iata_code}, ${d.city_name})
       ON CONFLICT DO NOTHING
-    `;
-  }
+    `),
+  ]);
 }
 
 export async function getDestinations(subscriberId: string): Promise<Destination[]> {

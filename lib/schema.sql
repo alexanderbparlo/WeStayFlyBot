@@ -98,3 +98,13 @@ $$ LANGUAGE plpgsql;
 CREATE TRIGGER subscribers_updated_at
   BEFORE UPDATE ON subscribers
   FOR EACH ROW EXECUTE FUNCTION update_updated_at();
+
+-- RATE LIMITS
+-- Tracks request counts per IP+route within a 15-minute sliding window.
+-- Used by lib/rate-limit.ts. Run this as part of the initial schema migration.
+CREATE TABLE IF NOT EXISTS rate_limits (
+  identifier   TEXT PRIMARY KEY,          -- e.g. "1.2.3.4:subscribe"
+  attempts     INTEGER NOT NULL DEFAULT 1,
+  window_start TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+CREATE INDEX IF NOT EXISTS idx_rate_limits_identifier ON rate_limits(identifier);

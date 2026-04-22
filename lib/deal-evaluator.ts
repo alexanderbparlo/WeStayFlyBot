@@ -31,7 +31,7 @@ function makeDealKey(deal: EvaluatedDeal): string {
     deal.type,
     deal.originIata ?? '',
     deal.destIata ?? '',
-    deal.destCity,
+    deal.destCity.trim(),
     deal.flight?.departDate ?? '',
     deal.hotel?.checkIn ?? '',
   ];
@@ -183,15 +183,10 @@ export async function processDealsForSubscriber(params: {
       continue;
     }
 
-    // Send email
+    // Record in DB first — if email succeeds but record fails, the subscriber
+    // gets spammed on every subsequent scan. Recording first means a failed send
+    // suppresses the deal for 72h (conservative), which is far preferable.
     try {
-      await sendDealEmail({
-        email: params.email,
-        subscriberToken: params.subscriberToken,
-        deal,
-      });
-
-      // Record in DB
       await recordDealSent({
         subscriberId: params.subscriberId,
         dealKey,
@@ -204,10 +199,23 @@ export async function processDealsForSubscriber(params: {
         flightPrice: deal.flight?.pricePerPerson,
         hotelPrice: deal.hotel?.pricePerNight,
       });
+    } catch (err) {
+      console.error(`[deal-evaluator] Failed to record deal ${dealKey}, skipping send:`, err);
+      skipped++;
+      continue;
+    }
 
+    // Send email
+    try {
+      await sendDealEmail({
+        email: params.email,
+        subscriberToken: params.subscriberToken,
+        deal,
+      });
       sent++;
     } catch (err) {
       console.error(`[deal-evaluator] Failed to send deal ${dealKey}:`, err);
+      // Deal is recorded but not delivered; it will be suppressed for 72h.
     }
   }
 

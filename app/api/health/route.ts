@@ -12,6 +12,7 @@ const REQUIRED_TABLES = [
   'destinations',
   'deals_sent',
   'price_baseline_cache',
+  'rate_limits',
 ];
 
 export async function GET(): Promise<NextResponse> {

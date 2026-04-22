@@ -3,7 +3,9 @@
 // Called by Vercel Cron on schedule (8:00 AM and 8:00 PM ET).
 // Protected by CRON_SECRET to prevent unauthorized triggers.
 // Iterates all active subscribers, scans their routes, evaluates deals, sends alerts.
+export const dynamic = 'force-dynamic';
 
+import { timingSafeEqual } from 'crypto';
 import { NextRequest, NextResponse } from 'next/server';
 import {
   getAllActiveSubscribers,
@@ -15,13 +17,26 @@ import { scanHotelsForDestination } from '@/lib/hotel-scanner';
 import { evaluateFlightDestination, evaluateRoadtripDestination, EvaluatedDeal } from '@/lib/deal-evaluator';
 import { processDealsForSubscriber } from '@/lib/deal-evaluator';
 
+// ─── CONSTANTS ────────────────────────────────────────────────────────────────
+
+// Leave ~10s of buffer before Vercel's function limit (60s on Pro).
+const MAX_RUNTIME_MS = parseInt(process.env.CRON_MAX_RUNTIME_MS ?? '50000', 10);
+
 // ─── AUTH ─────────────────────────────────────────────────────────────────────
 
 function isAuthorized(req: NextRequest): boolean {
   const authHeader = req.headers.get('authorization');
   const secret = process.env.CRON_SECRET;
-  if (!secret) return false;
-  return authHeader === `Bearer ${secret}`;
+  if (!secret || !authHeader) return false;
+  try {
+    // Constant-time comparison to prevent timing-based secret enumeration.
+    const expected = Buffer.from(`Bearer ${secret}`);
+    const received = Buffer.from(authHeader);
+    if (expected.length !== received.length) return false;
+    return timingSafeEqual(expected, received);
+  } catch {
+    return false;
+  }
 }
 
 // ─── HANDLER ─────────────────────────────────────────────────────────────────
@@ -34,23 +49,29 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
   const startTime = Date.now();
   console.log(`[scan-deals] Starting scan at ${new Date().toISOString()}`);
 
-  const runLog: {
-    subscriberId: string;
-    email: string;
-    dealsSent: number;
-    dealsSkipped: number;
-    error?: string;
-  }[] = [];
+  let totalSent = 0;
+  let totalSkipped = 0;
+  let errorCount = 0;
+  let processedCount = 0;
+  let timedOut = false;
 
   try {
     const subscribers = await getAllActiveSubscribers();
     console.log(`[scan-deals] Found ${subscribers.length} active subscriber(s)`);
 
     for (const subscriber of subscribers) {
-      console.log(`[scan-deals] Processing ${subscriber.email}`);
+      // Timeout guard: stop before Vercel kills the function mid-subscriber.
+      if (Date.now() - startTime > MAX_RUNTIME_MS) {
+        timedOut = true;
+        console.warn(
+          `[scan-deals] Timeout guard triggered after ${processedCount}/${subscribers.length} subscribers`
+        );
+        break;
+      }
+
+      console.log(`[scan-deals] Processing subscriber ${processedCount + 1}/${subscribers.length}`);
 
       try {
-        // Fetch subscriber's origins and destinations
         const origins = await getOriginAirports(subscriber.id);
         const destinations = await getDestinations(subscriber.id);
 
@@ -61,14 +82,12 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
 
         // ── Scan flight destinations ─────────────────────────────────────────
         for (const dest of flightDests) {
-          // Hotel scan for this destination (shared across all origin airports)
           const hotelDeals = await scanHotelsForDestination({
             destCity: dest.city_name,
             destIata: dest.iata_code,
             minStars: subscriber.min_hotel_stars,
           });
 
-          // Flight scan per origin airport
           for (const origin of origins) {
             const { deals: flightDeals, comboEligible } = await scanFlightsForRoute({
               originIata: origin.iata_code,
@@ -105,7 +124,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
           allDeals.push(...evaluated);
         }
 
-        console.log(`[scan-deals] ${subscriber.email}: ${allDeals.length} deal(s) found`);
+        console.log(`[scan-deals] Subscriber ${processedCount + 1}: ${allDeals.length} deal(s) found`);
 
         // ── Dedup + send ──────────────────────────────────────────────────────
         const { sent, skipped } = await processDealsForSubscriber({
@@ -115,25 +134,16 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
           deals: allDeals,
         });
 
-        runLog.push({
-          subscriberId: subscriber.id,
-          email: subscriber.email,
-          dealsSent: sent,
-          dealsSkipped: skipped,
-        });
-
-        console.log(`[scan-deals] ${subscriber.email}: sent=${sent}, skipped=${skipped}`);
+        totalSent += sent;
+        totalSkipped += skipped;
+        console.log(`[scan-deals] Subscriber ${processedCount + 1}: sent=${sent}, skipped=${skipped}`);
 
       } catch (subErr) {
-        console.error(`[scan-deals] Error for subscriber ${subscriber.email}:`, subErr);
-        runLog.push({
-          subscriberId: subscriber.id,
-          email: subscriber.email,
-          dealsSent: 0,
-          dealsSkipped: 0,
-          error: String(subErr),
-        });
+        console.error(`[scan-deals] Error for subscriber ${processedCount + 1}:`, subErr);
+        errorCount++;
       }
+
+      processedCount++;
     }
 
   } catch (err) {
@@ -147,8 +157,10 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
   return NextResponse.json({
     success: true,
     elapsed: `${elapsed}s`,
-    subscribers: runLog.length,
-    totalSent: runLog.reduce((s, r) => s + r.dealsSent, 0),
-    log: runLog,
+    processed: processedCount,
+    totalSent,
+    totalSkipped,
+    errors: errorCount,
+    ...(timedOut && { warning: 'Timeout guard triggered — not all subscribers were processed.' }),
   });
 }

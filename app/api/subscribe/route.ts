@@ -203,7 +203,30 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     return NextResponse.json({ success: true, subscriberId: subscriber.id }, { status: 201 });
 
   } catch (err) {
-    console.error('[subscribe] Error:', err);
+    const detail = String(err);
+    console.error('[subscribe] Error:', detail);
+
+    // Return a categorized hint so the operator can diagnose without checking logs.
+    // No internal details (table names, queries, stack traces) are exposed.
+    if (detail.includes('No database URL')) {
+      return NextResponse.json(
+        { error: 'Service temporarily unavailable', hint: 'DB_URL_MISSING' },
+        { status: 503 }
+      );
+    }
+    if (detail.includes('does not exist') || detail.includes('relation')) {
+      return NextResponse.json(
+        { error: 'Service temporarily unavailable', hint: 'DB_SCHEMA_MISSING' },
+        { status: 503 }
+      );
+    }
+    if (detail.includes('connect') || detail.includes('ECONNREFUSED') || detail.includes('fetch')) {
+      return NextResponse.json(
+        { error: 'Service temporarily unavailable', hint: 'DB_UNREACHABLE' },
+        { status: 503 }
+      );
+    }
+
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
